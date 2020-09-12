@@ -2,6 +2,10 @@ import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { LogMongoRespository } from './log'
 
+const makeSut = (): LogMongoRespository => {
+  return new LogMongoRespository()
+}
+
 describe('Log Mongo Repository', () => {
   let errorCollection: Collection
   beforeAll(async () => {
@@ -18,7 +22,7 @@ describe('Log Mongo Repository', () => {
   })
 
   test('should create an error log on success', async () => {
-    const sut = new LogMongoRespository()
+    const sut = makeSut()
     await sut.logError('any_error')
     const count = await errorCollection.countDocuments()
     expect(count).toBe(1)
